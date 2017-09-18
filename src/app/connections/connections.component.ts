@@ -41,7 +41,7 @@ export class ConnectionsComponent implements OnInit {
   }
 
   private pull() {
-    this.http.get(environment.api('connections')).subscribe((info) => {
+    this.http.get(environment.api('info')).subscribe((info) => {
       this.extractAll(info);
       this.toolbar.progressStop();
     }, (response) => {
@@ -58,7 +58,7 @@ export class ConnectionsComponent implements OnInit {
   }
 
   private extract(id: string, pull: () => any) {
-    const section = this.sections.find((section) => section.id === id);
+    const section = this.sections.find((s) => s.id === id);
     try {
       const message = pull();
       if (!isNullOrUndefined(message)) {

@@ -15,11 +15,13 @@ import {AceEditorModule} from 'ng2-ace-editor';
 import {HttpClientModule} from '@angular/common/http';
 import {ToolbarComponent} from './toolbar/toolbar.component';
 import {ToolbarService} from './toolbar/toolbar.service';
+import {InfoComponent} from './info/info.component';
 
 const routes: Routes = [
   {path: 'configuration', component: ConfigurationComponent},
   {path: 'connections', component: ConnectionsComponent},
   {path: 'setup', component: SetupComponent},
+  {path: 'info', component: InfoComponent},
   {path: '**', redirectTo: 'configuration'}
 ];
 
@@ -28,6 +30,7 @@ const routes: Routes = [
     LifterComponent,
     ConnectionsComponent,
     SetupComponent,
+    InfoComponent,
     ConfigurationComponent,
     ToolbarComponent,
     ConfigurationUpdateDialogComponent
