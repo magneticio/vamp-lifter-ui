@@ -10,7 +10,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {LifterComponent} from './lifter.component';
 import {ConnectionsComponent} from './connections/connections.component';
 import {SetupComponent} from './setup/setup.component';
-import {ConfigurationComponent, ConfigurationUpdateDialog} from './configuration/configuration.component';
+import {ConfigurationComponent, ConfigurationUpdateDialogComponent} from './configuration/configuration.component';
 import {AceEditorModule} from 'ng2-ace-editor';
 import {HttpClientModule} from '@angular/common/http';
 import {ToolbarComponent} from './toolbar/toolbar.component';
@@ -30,7 +30,7 @@ const routes: Routes = [
     SetupComponent,
     ConfigurationComponent,
     ToolbarComponent,
-    ConfigurationUpdateDialog
+    ConfigurationUpdateDialogComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -54,7 +54,7 @@ const routes: Routes = [
   ],
   providers: [ToolbarService],
   bootstrap: [LifterComponent],
-  entryComponents: [ConfigurationUpdateDialog]
+  entryComponents: [ConfigurationUpdateDialogComponent]
 })
 export class LifterModule {
 }

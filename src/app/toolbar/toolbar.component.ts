@@ -1,16 +1,16 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {ToolbarAction, ToolbarService} from "./toolbar.service";
-import {NavigationEnd, Router} from "@angular/router";
+import {ToolbarAction, ToolbarService} from './toolbar.service';
+import {NavigationEnd, Router} from '@angular/router';
 
 @Component({
-  selector: 'lifter-toolbar',
+  selector: 'app-lifter-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
 
   actions: Array<ToolbarAction> = [];
-  progress: boolean = false;
+  progress = false;
 
   @Output() onMenu: EventEmitter<any> = new EventEmitter();
 

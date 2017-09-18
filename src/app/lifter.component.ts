@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'lifter',
+  selector: 'app-lifter',
   templateUrl: './lifter.component.html',
   styleUrls: ['./lifter.component.scss']
 })

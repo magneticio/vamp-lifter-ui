@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {ToolbarAction, ToolbarService} from '../toolbar/toolbar.service';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
-import {MdSnackBar, MdSnackBarConfig} from "@angular/material";
+import {MdSnackBar, MdSnackBarConfig} from '@angular/material';
 
 @Component({
-  selector: 'lifter-setup',
+  selector: 'app-lifter-setup',
   templateUrl: './setup.component.html',
   styleUrls: ['./setup.component.scss']
 })
@@ -24,7 +24,7 @@ export class SetupComponent implements OnInit {
     this.http.get(environment.api('setup')).subscribe((setup) => {
       this.model = setup || {};
       const artifacts = setup['artifacts'] || {};
-      for (let artifact in artifacts) {
+      for (const artifact in artifacts) {
         if (artifacts.hasOwnProperty(artifact)) {
           this.artifacts.push(artifact);
         }

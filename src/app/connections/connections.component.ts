@@ -2,10 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {ToolbarAction, ToolbarService} from '../toolbar/toolbar.service';
-import {isNullOrUndefined} from "util";
+import {isNullOrUndefined} from 'util';
 
 @Component({
-  selector: 'lifter-connections',
+  selector: 'app-lifter-connections',
   templateUrl: './connections.component.html',
   styleUrls: ['./connections.component.scss']
 })

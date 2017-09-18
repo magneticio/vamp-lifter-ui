@@ -1,22 +1,22 @@
 import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
-import {ToolbarAction, ToolbarService} from "../toolbar/toolbar.service";
-import {MD_DIALOG_DATA, MdDialog, MdDialogRef, MdSnackBar, MdSnackBarConfig} from "@angular/material";
-import {environment} from "../../environments/environment";
-import {Observable} from "rxjs/Observable";
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {ToolbarAction, ToolbarService} from '../toolbar/toolbar.service';
+import {MD_DIALOG_DATA, MdDialog, MdDialogRef, MdSnackBar, MdSnackBarConfig} from '@angular/material';
+import {environment} from '../../environments/environment';
+import {Observable} from 'rxjs/Observable';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import 'rxjs/Rx';
 
 @Component({
-  selector: 'lifter-configuration',
+  selector: 'app-lifter-configuration',
   templateUrl: './configuration.component.html',
   styleUrls: ['./configuration.component.scss'],
 })
 export class ConfigurationComponent implements OnInit, OnDestroy {
 
   config: string;
-  text: string = '';
+  text = '';
   options: any = {maxLines: 1000, printMargin: false};
-  footer: string = '';
+  footer = '';
 
   constructor(private http: HttpClient,
               private toolbar: ToolbarService,
@@ -52,7 +52,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
   refresh() {
     this.getConfiguration(true, false).subscribe((text) => {
       if (text !== this.text) {
-        let dialogRef = this.dialog.open(ConfigurationUpdateDialog);
+        const dialogRef = this.dialog.open(ConfigurationUpdateDialogComponent);
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
             this.text = text;
@@ -66,7 +66,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
   pull() {
     this.getConfiguration(false, true).subscribe((text) => {
       if (text !== this.text) {
-        let dialogRef = this.dialog.open(ConfigurationUpdateDialog);
+        const dialogRef = this.dialog.open(ConfigurationUpdateDialogComponent);
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
             this.text = text;
@@ -90,7 +90,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
       const config = new MdSnackBarConfig();
       config.duration = 2000;
       this.snackBar.open('An error occurred!', null, config);
-    })
+    });
   }
 
   private set(kv: boolean = false, force: boolean = false, success: () => any = () => {
@@ -139,12 +139,12 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 }
 
 @Component({
-  selector: 'lifter-configuration-dialog',
+  selector: 'app-lifter-configuration-dialog',
   templateUrl: './dialog.component.html',
 })
-export class ConfigurationUpdateDialog {
+export class ConfigurationUpdateDialogComponent {
 
-  constructor(public dialogRef: MdDialogRef<ConfigurationUpdateDialog>,
+  constructor(public dialogRef: MdDialogRef<ConfigurationUpdateDialogComponent>,
               @Inject(MD_DIALOG_DATA) public data: any) {
   }
 
