@@ -1,4 +1,4 @@
-import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {ToolbarAction, ToolbarService} from '../toolbar/toolbar.service';
 import {MD_DIALOG_DATA, MdDialog, MdDialogRef, MdSnackBar, MdSnackBarConfig} from '@angular/material';
 import {environment} from '../../environments/environment';
@@ -11,12 +11,11 @@ import 'rxjs/Rx';
   templateUrl: './configuration.component.html',
   styleUrls: ['./configuration.component.scss'],
 })
-export class ConfigurationComponent implements OnInit, OnDestroy {
+export class ConfigurationComponent implements OnInit {
 
   config: string;
   text = '';
   options: any = {maxLines: 1000, printMargin: false};
-  footer = '';
 
   constructor(private http: HttpClient,
               private toolbar: ToolbarService,
@@ -26,27 +25,22 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getConfiguration(false, false).subscribe((text) => this.text = text, () => {
-      const config = new MdSnackBarConfig();
-      config.duration = 2000;
-      this.snackBar.open('An error occurred!', null, config);
+      this.showSnackBar('An error occurred! Check network connection and configuration parameters.');
     });
     this.toolbar.actions.next([
-      new ToolbarAction(this, 'autorenew', 'Reload from Configuration', ($this) => $this.refresh()),
+      new ToolbarAction(this, 'save', 'Save', ($this) => $this.save()),
       new ToolbarAction(this, 'cloud_download', 'Pull from KV Store', ($this) => $this.pull()),
-      new ToolbarAction(this, 'cloud_upload', 'Push to KV Store', ($this) => $this.push())
+      new ToolbarAction(this, 'cloud_upload', 'Push to KV Store', ($this) => $this.push()),
+      new ToolbarAction(this, 'autorenew', 'Revert to original static configuration', ($this) => $this.refresh())
     ]);
   }
 
-  onChange() {
+  save() {
     this.set(false, false, () => {
-      this.footer = 'Configuration has been saved.';
+      this.showSnackBar('Configuration has been saved.');
     }, () => {
-      this.footer = 'Configuration can\'t be saved - invalid input.';
+      this.showSnackBar('Configuration can\'t be saved - invalid input.');
     });
-  }
-
-  ngOnDestroy(): void {
-    this.set();
   }
 
   refresh() {
@@ -73,23 +67,19 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
             this.set(true, true);
           }
         });
+      } else {
+        this.showSnackBar('Configuration is successfully pulled from KV store.');
       }
     }, () => {
-      const config = new MdSnackBarConfig();
-      config.duration = 2000;
-      this.snackBar.open('An error occurred!', null, config);
+      this.showSnackBar('An error occurred! Check network connection and configuration parameters.');
     });
   }
 
   push() {
     this.set(true, true, () => {
-      const config = new MdSnackBarConfig();
-      config.duration = 2000;
-      this.snackBar.open('Configuration is successfully stored to KV store!', null, config);
+      this.showSnackBar('Configuration is successfully stored to KV store.');
     }, () => {
-      const config = new MdSnackBarConfig();
-      config.duration = 2000;
-      this.snackBar.open('An error occurred!', null, config);
+      this.showSnackBar('An error occurred! Check network connection and configuration parameters.');
     });
   }
 
@@ -135,6 +125,12 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
       return this.http.post(environment.api('config'), config, {params: params});
     }
     return Observable.from([]);
+  }
+
+  private showSnackBar(message: string) {
+    const config = new MdSnackBarConfig();
+    config.duration = 2000;
+    this.snackBar.open(message, null, config);
   }
 }
 
