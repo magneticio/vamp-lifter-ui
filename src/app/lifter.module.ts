@@ -10,7 +10,10 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {LifterComponent} from './lifter.component';
 import {ConnectionsComponent} from './connections/connections.component';
 import {SetupComponent} from './setup/setup.component';
-import {ConfigurationComponent, ConfigurationUpdateDialogComponent} from './configuration/configuration.component';
+import {
+  ConfigurationComponent, ConfigurationConfirmationDialogComponent,
+  SaveConfigurationGuard
+} from './configuration/configuration.component';
 import {AceEditorModule} from 'ng2-ace-editor';
 import {HttpClientModule} from '@angular/common/http';
 import {ToolbarComponent} from './toolbar/toolbar.component';
@@ -18,11 +21,27 @@ import {ToolbarService} from './toolbar/toolbar.service';
 import {InfoComponent} from './info/info.component';
 
 const routes: Routes = [
-  {path: 'configuration', component: ConfigurationComponent},
-  {path: 'connections', component: ConnectionsComponent},
-  {path: 'setup', component: SetupComponent},
-  {path: 'info', component: InfoComponent},
-  {path: '**', redirectTo: 'configuration'}
+  {
+    path: 'configuration',
+    component: ConfigurationComponent,
+    canDeactivate: [SaveConfigurationGuard]
+  },
+  {
+    path: 'connections',
+    component: ConnectionsComponent
+  },
+  {
+    path: 'setup',
+    component: SetupComponent
+  },
+  {
+    path: 'info',
+    component: InfoComponent
+  },
+  {
+    path: '**',
+    redirectTo: 'configuration'
+  }
 ];
 
 @NgModule({
@@ -33,7 +52,7 @@ const routes: Routes = [
     InfoComponent,
     ConfigurationComponent,
     ToolbarComponent,
-    ConfigurationUpdateDialogComponent
+    ConfigurationConfirmationDialogComponent
   ],
   imports: [
     RouterModule.forRoot(routes),
@@ -55,9 +74,9 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [ToolbarService],
+  providers: [ToolbarService, SaveConfigurationGuard],
   bootstrap: [LifterComponent],
-  entryComponents: [ConfigurationUpdateDialogComponent]
+  entryComponents: [ConfigurationConfirmationDialogComponent]
 })
 export class LifterModule {
 }

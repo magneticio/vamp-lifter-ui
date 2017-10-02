@@ -1,10 +1,11 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, Injectable, OnInit} from '@angular/core';
 import {ToolbarAction, ToolbarService} from '../toolbar/toolbar.service';
-import {MD_DIALOG_DATA, MdDialog, MdDialogRef, MdSnackBar, MdSnackBarConfig} from '@angular/material';
+import {MD_DIALOG_DATA, MdDialog, MdDialogConfig, MdDialogRef, MdSnackBar, MdSnackBarConfig} from '@angular/material';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs/Observable';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import 'rxjs/Rx';
+import {CanDeactivate} from '@angular/router';
 
 @Component({
   selector: 'app-lifter-configuration',
@@ -14,6 +15,7 @@ import 'rxjs/Rx';
 export class ConfigurationComponent implements OnInit {
 
   config: string;
+  base = '';
   text = '';
   options: any = {maxLines: 1000, printMargin: false};
 
@@ -24,7 +26,7 @@ export class ConfigurationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getConfiguration(false, false).subscribe((text) => this.text = text, () => {
+    this.getConfiguration(false, false).subscribe((text) => this.base = this.text = text, () => {
       this.showSnackBar('An error occurred! Check network connection and configuration parameters.');
     });
     this.toolbar.actions.next([
@@ -46,10 +48,14 @@ export class ConfigurationComponent implements OnInit {
   refresh() {
     this.getConfiguration(true, false).subscribe((text) => {
       if (text !== this.text) {
-        const dialogRef = this.dialog.open(ConfigurationUpdateDialogComponent);
+        const config = new MdDialogConfig();
+        config.data = {
+          question: 'Are you sure you want to replace the current configuration?'
+        };
+        const dialogRef = this.dialog.open(ConfigurationConfirmationDialogComponent, config);
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
-            this.text = text;
+            this.base = this.text = text;
             this.set(false, true);
           }
         });
@@ -60,10 +66,14 @@ export class ConfigurationComponent implements OnInit {
   pull() {
     this.getConfiguration(false, true).subscribe((text) => {
       if (text !== this.text) {
-        const dialogRef = this.dialog.open(ConfigurationUpdateDialogComponent);
+        const config = new MdDialogConfig();
+        config.data = {
+          question: 'Are you sure you want to replace the current configuration?'
+        };
+        const dialogRef = this.dialog.open(ConfigurationConfirmationDialogComponent, config);
         dialogRef.afterClosed().subscribe(result => {
           if (result) {
-            this.text = text;
+            this.base = this.text = text;
             this.set(true, true);
           }
         });
@@ -83,12 +93,17 @@ export class ConfigurationComponent implements OnInit {
     });
   }
 
+  dirty() {
+    return this.text !== this.base;
+  }
+
   private set(kv: boolean = false, force: boolean = false, success: () => any = () => {
   }, error: () => any = () => {
   }): void {
     this.toolbar.progressStart();
     this.setConfiguration(this.text, kv, force).subscribe(
       () => {
+        this.base = this.text;
         success();
         this.toolbar.progressStop();
       },
@@ -97,6 +112,7 @@ export class ConfigurationComponent implements OnInit {
         this.toolbar.progressStop();
       },
       () => {
+        this.base = this.text;
         success();
         this.toolbar.progressStop();
       }
@@ -138,13 +154,32 @@ export class ConfigurationComponent implements OnInit {
   selector: 'app-lifter-configuration-dialog',
   templateUrl: './dialog.component.html',
 })
-export class ConfigurationUpdateDialogComponent {
+export class ConfigurationConfirmationDialogComponent {
 
-  constructor(public dialogRef: MdDialogRef<ConfigurationUpdateDialogComponent>,
+  constructor(public dialogRef: MdDialogRef<ConfigurationConfirmationDialogComponent>,
               @Inject(MD_DIALOG_DATA) public data: any) {
   }
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+}
+
+@Injectable()
+export class SaveConfigurationGuard implements CanDeactivate<ConfigurationComponent> {
+
+  constructor(private dialog: MdDialog) {}
+
+  canDeactivate(component: ConfigurationComponent): Observable<boolean>|boolean {
+    if (component.dirty()) {
+      const config = new MdDialogConfig();
+      config.data = {
+        question: 'Are you sure you want to leave without saving the configuration?'
+      };
+      const dialogRef = this.dialog.open(ConfigurationConfirmationDialogComponent, config);
+      return dialogRef.afterClosed();
+    } else {
+      return true;
+    }
   }
 }
