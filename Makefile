@@ -34,3 +34,12 @@ pack:
 		$(BUILD_SERVER) \
 			push vamp-lifter-ui $(VERSION)
 
+pack-local:
+	ng build -prod
+
+	docker run \
+		--rm \
+		--volume $(CURDIR)/dist:/usr/local/src \
+		--volume packer:/usr/local/stash \
+		$(BUILD_SERVER) \
+			push vamp-lifter-ui $(VERSION)
