@@ -30,18 +30,18 @@ export class ConfigurationComponent implements OnInit {
       this.showSnackBar('An error occurred! Check network connection and configuration parameters.');
     });
     this.toolbar.actions.next([
-      new ToolbarAction(this, 'save', 'Save', ($this) => $this.save()),
+      new ToolbarAction(this, 'done', 'Apply', ($this) => $this.apply()),
       new ToolbarAction(this, 'cloud_download', 'Pull from KV Store', ($this) => $this.pull()),
       new ToolbarAction(this, 'cloud_upload', 'Push to KV Store', ($this) => $this.push()),
       new ToolbarAction(this, 'autorenew', 'Revert to original static configuration', ($this) => $this.refresh())
     ]);
   }
 
-  save() {
+  apply() {
     this.set(false, false, () => {
-      this.showSnackBar('Configuration has been saved.');
+      this.showSnackBar('Configuration has been applied.');
     }, () => {
-      this.showSnackBar('Configuration can\'t be saved - invalid input.');
+      this.showSnackBar('Configuration can\'t be applied - invalid input.');
     });
   }
 
