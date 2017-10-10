@@ -25,7 +25,9 @@ default: pack
 .PHONY: pack
 pack:
 	npm install
-	ng build -prod
+	npm upgrade
+	npm prune
+	npm run ng build -- -prod
 
 	docker run \
 		--rm \
