@@ -1,8 +1,8 @@
 <div class="sections">
 
-  <md-card class="section" *ngFor="let section of sections">
-    <md-card-header>
-      <md-card-title>
+  <mat-card class="section" *ngFor="let section of sections">
+    <mat-card-header>
+      <mat-card-title>
         <table style="min-width: 300px;">
           <tr>
             <td width="50%" style="text-align: right;">
@@ -13,12 +13,12 @@
             </td>
           </tr>
         </table>
-      </md-card-title>
+      </mat-card-title>
       <div class="status">
-        <md-icon *ngIf="section.ok" color="accent">check_circle</md-icon>
-        <md-icon *ngIf="section.error" color="warn">error</md-icon>
+        <mat-icon *ngIf="section.ok" color="accent">check_circle</mat-icon>
+        <mat-icon *ngIf="section.error" color="warn">error</mat-icon>
       </div>
-    </md-card-header>
-  </md-card>
+    </mat-card-header>
+  </mat-card>
 
 </div>

@@ -1,4 +1,4 @@
-md-sidenav-container {
+mat-sidenav-container {
   margin: 0;
   width: 100%;
   height: calc(100% - 64px);
@@ -16,7 +16,7 @@ md-sidenav-container {
   width: 280px;
 }
 
-.navigation-link > md-icon, span {
+.navigation-link > mat-icon, span {
   vertical-align: middle;
   margin: 0 5px;
 }

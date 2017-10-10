@@ -1,13 +1,13 @@
-<md-toolbar color="primary">
-  <button md-icon-button (click)="onMenuClicked($event)">
-    <md-icon>menu</md-icon>
+<mat-toolbar color="primary">
+  <button mat-icon-button (click)="onMenuClicked($event)">
+    <mat-icon>menu</mat-icon>
   </button>
   <span class="title">Vamp Lifter</span>
   <span class="filler"></span>
-  <button md-icon-button *ngFor="let action of actions" (click)="action.click(action.$this, $event)" [mdTooltip]="action.tooltip">
-    <md-icon>{{ action.icon }}</md-icon>
+  <button mat-icon-button *ngFor="let action of actions" (click)="action.click(action.$this, $event)" [matTooltip]="action.tooltip">
+    <mat-icon>{{ action.icon }}</mat-icon>
   </button>
-</md-toolbar>
+</mat-toolbar>
 <div class="progress" [ngClass]="{'show-progress': progress}">
-  <md-progress-bar mode="indeterminate"></md-progress-bar>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </div>
