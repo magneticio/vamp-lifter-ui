@@ -3,8 +3,8 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
-  MdButtonModule, MdCardModule, MdCheckboxModule, MdDialogModule, MdIconModule, MdListModule, MdProgressBarModule,
-  MdSidenavModule, MdSnackBarModule, MdToolbarModule, MdTooltipModule
+  MatButtonModule, MatCardModule, MatCheckboxModule, MatDialogModule, MatIconModule, MatListModule, MatProgressBarModule,
+  MatSidenavModule, MatSnackBarModule, MatToolbarModule, MatTooltipModule
 } from '@angular/material';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {LifterComponent} from './lifter.component';
@@ -60,17 +60,17 @@ const routes: Routes = [
     HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
-    MdButtonModule,
-    MdIconModule,
-    MdToolbarModule,
-    MdSidenavModule,
-    MdListModule,
-    MdProgressBarModule,
-    MdTooltipModule,
-    MdDialogModule,
-    MdSnackBarModule,
-    MdCardModule,
-    MdCheckboxModule,
+    MatButtonModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatListModule,
+    MatProgressBarModule,
+    MatTooltipModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    MatCardModule,
+    MatCheckboxModule,
     FormsModule,
     ReactiveFormsModule
   ],

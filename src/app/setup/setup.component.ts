@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ToolbarAction, ToolbarService} from '../toolbar/toolbar.service';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
-import {MdSnackBar, MdSnackBarConfig} from '@angular/material';
+import {MatSnackBar, MatSnackBarConfig} from '@angular/material';
 
 @Component({
   selector: 'app-lifter-setup',
@@ -14,7 +14,7 @@ export class SetupComponent implements OnInit {
   model: any = {};
   artifacts: Array<string> = [];
 
-  constructor(private http: HttpClient, private toolbar: ToolbarService, private snackBar: MdSnackBar) {
+  constructor(private http: HttpClient, private toolbar: ToolbarService, private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -30,7 +30,7 @@ export class SetupComponent implements OnInit {
         }
       }
     }, () => {
-      const config = new MdSnackBarConfig();
+      const config = new MatSnackBarConfig();
       config.duration = 2000;
       this.snackBar.open('Error occurred during data retrieval!', null, config);
     });
@@ -40,19 +40,19 @@ export class SetupComponent implements OnInit {
     this.toolbar.progressStart();
     this.http.post(environment.api('setup'), this.model).subscribe(
       () => {
-        const config = new MdSnackBarConfig();
+        const config = new MatSnackBarConfig();
         config.duration = 2000;
         this.snackBar.open('Everything is setup correctly!', null, config);
         this.toolbar.progressStop();
       },
       () => {
-        const config = new MdSnackBarConfig();
+        const config = new MatSnackBarConfig();
         config.duration = 2000;
         this.snackBar.open('An error occurred!', null, config);
         this.toolbar.progressStop();
       },
       () => {
-        const config = new MdSnackBarConfig();
+        const config = new MatSnackBarConfig();
         config.duration = 2000;
         this.snackBar.open('Everything is setup correctly!', null, config);
         this.toolbar.progressStop();

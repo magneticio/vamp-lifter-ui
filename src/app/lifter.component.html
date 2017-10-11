@@ -1,38 +1,38 @@
 <app-lifter-toolbar (onMenu)="sidenav.toggle()"></app-lifter-toolbar>
 
-<md-sidenav-container>
-  <md-sidenav #sidenav class="side-nav" mode="side" opened="true">
+<mat-sidenav-container>
+  <mat-sidenav #sidenav class="side-nav" mode="side" opened="true">
 
-    <md-nav-list>
-      <md-list-item>
-        <a md-line routerLink="configuration" class="navigation-link">
-          <md-icon>settings</md-icon>
+    <mat-nav-list>
+      <mat-list-item>
+        <a matLine routerLink="configuration" class="navigation-link">
+          <mat-icon>settings</mat-icon>
           <span>Configuration</span>
         </a>
-      </md-list-item>
-      <md-list-item>
-        <a md-line routerLink="connections" class="navigation-link">
-          <md-icon>network_check</md-icon>
+      </mat-list-item>
+      <mat-list-item>
+        <a matLine routerLink="connections" class="navigation-link">
+          <mat-icon>network_check</mat-icon>
           <span>Connections</span>
         </a>
-      </md-list-item>
-      <md-list-item>
-        <a md-line routerLink="setup" class="navigation-link">
-          <md-icon>tune</md-icon>
+      </mat-list-item>
+      <mat-list-item>
+        <a matLine routerLink="setup" class="navigation-link">
+          <mat-icon>tune</mat-icon>
           <span>Setup</span>
         </a>
-      </md-list-item>
-      <md-list-item>
-        <a md-line routerLink="info" class="navigation-link">
-          <md-icon>info_outline</md-icon>
+      </mat-list-item>
+      <mat-list-item>
+        <a matLine routerLink="info" class="navigation-link">
+          <mat-icon>info_outline</mat-icon>
           <span>Info</span>
         </a>
-      </md-list-item>
-    </md-nav-list>
+      </mat-list-item>
+    </mat-nav-list>
 
-  </md-sidenav>
+  </mat-sidenav>
 
   <div class="content">
     <router-outlet></router-outlet>
   </div>
-</md-sidenav-container>
+</mat-sidenav-container>

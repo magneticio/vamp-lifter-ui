@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ToolbarAction, ToolbarService} from '../toolbar/toolbar.service';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
-import {MdSnackBar, MdSnackBarConfig} from '@angular/material';
+import {MatSnackBar, MatSnackBarConfig} from '@angular/material';
 import 'rxjs/Rx';
 
 @Component({
@@ -15,7 +15,7 @@ export class InfoComponent implements OnInit {
   text = '';
   options: any = {maxLines: 1000, printMargin: false};
 
-  constructor(private http: HttpClient, private snackBar: MdSnackBar, private toolbar: ToolbarService) {
+  constructor(private http: HttpClient, private snackBar: MatSnackBar, private toolbar: ToolbarService) {
   }
 
   ngOnInit() {
@@ -33,7 +33,7 @@ export class InfoComponent implements OnInit {
         this.toolbar.progressStop();
       }, (response) => {
         this.text = JSON.stringify(response.error, null, '  ');
-        const config = new MdSnackBarConfig();
+        const config = new MatSnackBarConfig();
         config.duration = 2000;
         this.snackBar.open('Info cannot be (fully) retrieved!', null, config);
         this.toolbar.progressStop();

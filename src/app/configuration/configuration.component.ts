@@ -1,6 +1,6 @@
 import {Component, Inject, Injectable, OnInit} from '@angular/core';
 import {ToolbarAction, ToolbarService} from '../toolbar/toolbar.service';
-import {MD_DIALOG_DATA, MdDialog, MdDialogConfig, MdDialogRef, MdSnackBar, MdSnackBarConfig} from '@angular/material';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef, MatSnackBar, MatSnackBarConfig} from '@angular/material';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs/Observable';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
@@ -21,8 +21,8 @@ export class ConfigurationComponent implements OnInit {
 
   constructor(private http: HttpClient,
               private toolbar: ToolbarService,
-              private dialog: MdDialog,
-              private snackBar: MdSnackBar) {
+              private dialog: MatDialog,
+              private snackBar: MatSnackBar) {
   }
 
   ngOnInit() {
@@ -48,7 +48,7 @@ export class ConfigurationComponent implements OnInit {
   refresh() {
     this.getConfiguration(true, false).subscribe((text) => {
       if (text !== this.text) {
-        const config = new MdDialogConfig();
+        const config = new MatDialogConfig();
         config.data = {
           question: 'Are you sure you want to replace the current configuration?'
         };
@@ -66,7 +66,7 @@ export class ConfigurationComponent implements OnInit {
   pull() {
     this.getConfiguration(false, true).subscribe((text) => {
       if (text !== this.text) {
-        const config = new MdDialogConfig();
+        const config = new MatDialogConfig();
         config.data = {
           question: 'Are you sure you want to replace the current configuration?'
         };
@@ -144,7 +144,7 @@ export class ConfigurationComponent implements OnInit {
   }
 
   private showSnackBar(message: string) {
-    const config = new MdSnackBarConfig();
+    const config = new MatSnackBarConfig();
     config.duration = 2000;
     this.snackBar.open(message, null, config);
   }
@@ -156,8 +156,8 @@ export class ConfigurationComponent implements OnInit {
 })
 export class ConfigurationConfirmationDialogComponent {
 
-  constructor(public dialogRef: MdDialogRef<ConfigurationConfirmationDialogComponent>,
-              @Inject(MD_DIALOG_DATA) public data: any) {
+  constructor(public dialogRef: MatDialogRef<ConfigurationConfirmationDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
   onNoClick(): void {
@@ -168,11 +168,11 @@ export class ConfigurationConfirmationDialogComponent {
 @Injectable()
 export class SaveConfigurationGuard implements CanDeactivate<ConfigurationComponent> {
 
-  constructor(private dialog: MdDialog) {}
+  constructor(private dialog: MatDialog) {}
 
   canDeactivate(component: ConfigurationComponent): Observable<boolean>|boolean {
     if (component.dirty()) {
-      const config = new MdDialogConfig();
+      const config = new MatDialogConfig();
       config.data = {
         question: 'Are you sure you want to leave without saving the configuration?'
       };
