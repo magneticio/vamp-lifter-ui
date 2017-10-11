@@ -55,7 +55,7 @@ const routes: Routes = [
     ConfigurationConfirmationDialogComponent
   ],
   imports: [
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, { useHash: true }),
     AceEditorModule,
     HttpClientModule,
     BrowserModule,
