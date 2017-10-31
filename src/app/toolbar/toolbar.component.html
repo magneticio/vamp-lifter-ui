@@ -2,7 +2,10 @@
   <button mat-icon-button (click)="onMenuClicked($event)">
     <mat-icon>menu</mat-icon>
   </button>
-  <span class="title">Vamp Lifter</span>
+  <div>
+    <mat-icon id="logo" svgIcon="logo"></mat-icon>
+  </div>
+  <span class="title">Lifter</span>
   <span class="filler"></span>
   <button mat-icon-button *ngFor="let action of actions" (click)="action.click(action.$this, $event)" [matTooltip]="action.tooltip">
     <mat-icon>{{ action.icon }}</mat-icon>

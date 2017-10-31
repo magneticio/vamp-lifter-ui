@@ -10,6 +10,7 @@ mat-sidenav-container {
 
 .content {
   height: 100%;
+  background: #051c27;
 }
 
 .side-nav {
@@ -19,4 +20,14 @@ mat-sidenav-container {
 .navigation-link > mat-icon, span {
   vertical-align: middle;
   margin: 0 5px;
+}
+
+mat-sidenav-container {
+  margin: 0;
+  width: 100%;
+  height: calc(100% - 64px);
+}
+
+mat-sidenav {
+  background-color: #062431;
 }

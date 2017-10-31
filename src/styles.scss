@@ -1,7 +1,91 @@
 @import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
+@import '~@angular/material/theming';
+@include mat-core();
+
+$mat-vamp: (
+  50 : #e1e4e5,
+  100 : #b4bbbe,
+  200 : #828e93,
+  300 : #506068,
+  400 : #2b3e47,
+  500 : #051c27,
+  600 : #041923,
+  700 : #04141d,
+  800 : #031117,
+  900 : #01090e,
+  A100 : #51b9ff,
+  A200 : #3aba5e,
+  A400 : #008cea,
+  A700 : #007dd0,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #ffffff,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #ffffff,
+    A700 : #ffffff,
+  )
+);
+$mat-vamp-warn: (
+  50 : #e1e4e5,
+  100 : #b4bbbe,
+  200 : #828e93,
+  300 : #506068,
+  400 : #2b3e47,
+  500 : #ff3d5a,
+  600 : #041923,
+  700 : #04141d,
+  800 : #031117,
+  900 : #01090e,
+  A100 : #51b9ff,
+  A200 : #3aba5e,
+  A400 : #008cea,
+  A700 : #007dd0,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #ffffff,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #ffffff,
+    A700 : #ffffff,
+  )
+);
+
+$vamp-app-primary: mat-palette($mat-vamp);
+$vamp-app-accent: mat-palette($mat-vamp, A200, A100, A400);
+$vamp-app-warn: mat-palette($mat-vamp-warn);
+
+$vamp-app-theme: mat-dark-theme($vamp-app-primary, $vamp-app-accent, $vamp-app-warn);
+
+@include angular-material-theme($vamp-app-theme);
 
 html, body, lifter {
   margin: 0;
   width: 100%;
   height: 100%;
+  font-family: 'Roboto';
+  .mat-dialog-container {
+    background: #0a2c3c;
+  }
+}
+
+//OVERRIDES
+.mat-card {
+  background: #0a2c3c;
 }
