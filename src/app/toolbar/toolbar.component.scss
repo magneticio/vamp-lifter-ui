@@ -12,3 +12,16 @@
 .filler {
   flex: 1 1 auto;
 }
+
+.mat-toolbar {
+  background: #062431;
+  border-bottom: 1px solid #133e51;
+  mat-icon {
+    &#logo {
+      margin-top: 8px;
+      margin-right: 8px;
+      width: 96px;
+    }
+  }
+
+}

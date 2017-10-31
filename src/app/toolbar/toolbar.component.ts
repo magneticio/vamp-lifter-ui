@@ -1,6 +1,10 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {ToolbarAction, ToolbarService} from './toolbar.service';
 import {NavigationEnd, Router} from '@angular/router';
+import {DomSanitizer} from '@angular/platform-browser';
+import {MatIconRegistry} from '@angular/material';
+import {HttpClientModule} from '@angular/common/http';
+
 
 @Component({
   selector: 'app-lifter-toolbar',
@@ -14,7 +18,11 @@ export class ToolbarComponent implements OnInit {
 
   @Output() onMenu: EventEmitter<any> = new EventEmitter();
 
-  constructor(private router: Router, private toolbar: ToolbarService) { }
+  constructor(private router: Router, private toolbar: ToolbarService, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+    iconRegistry
+    .addSvgIcon('logo',
+    sanitizer.bypassSecurityTrustResourceUrl('/assets/icons/logo.svg'))
+  }
 
   ngOnInit() {
     this.router.events.filter((event) => event instanceof NavigationEnd).subscribe(() => {

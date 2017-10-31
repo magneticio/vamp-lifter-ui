@@ -15,10 +15,13 @@ import {
   SaveConfigurationGuard
 } from './configuration/configuration.component';
 import {AceEditorModule} from 'ng2-ace-editor';
-import {HttpClientModule} from '@angular/common/http';
 import {ToolbarComponent} from './toolbar/toolbar.component';
 import {ToolbarService} from './toolbar/toolbar.service';
 import {InfoComponent} from './info/info.component';
+import {HttpClientModule} from '@angular/common/http';
+import {HttpModule} from '@angular/http';
+
+
 
 const routes: Routes = [
   {
@@ -57,6 +60,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, { useHash: true }),
     AceEditorModule,
+    HttpModule,
     HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
