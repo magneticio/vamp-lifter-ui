@@ -7,41 +7,73 @@ SHELL             := bash
 
 # Constants, these can be overwritten in your Makefile.local
 BUILD_SERVER := magneticio/buildserver
-DIR_SBT	     := $(HOME)/.sbt
-DIR_IVY	     := $(HOME)/.ivy2
+DIR_NPM	     := $(HOME)/.npm
+DIR_GYP	     := $(HOME)/.node-gyp
 
 # if Makefile.local exists, include it.
 ifneq ("$(wildcard Makefile.local)", "")
 	include Makefile.local
 endif
 
-# Don't change these
 VERSION := $(shell git describe --tags)
+PROJECT := vamp-lifter-ui
 
 # Targets
-.PHONY: default
-default: pack
+.PHONY: all
+all: default
 
-.PHONY: pack
-pack:
+# Using our buildserver which contains all the necessary dependencies
+.PHONY: default
+default:
+	docker pull $(BUILD_SERVER)
+	docker run \
+		--name buildui \
+		--rm \
+		--volume $(CURDIR):/srv/src \
+		--volume $(DIR_NPM):/home/vamp/.npm \
+		--volume $(DIR_GYP):/home/vamp/.node-gyp \
+		--workdir=/srv/src \
+		--env BUILD_UID=$(shell id -u) \
+		--env BUILD_GID=$(shell id -g) \
+		$(BUILD_SERVER) \
+			make build
+
+
+.PHONY: build
+build:
+	npm rebuild node-sass
 	npm install
-	npm upgrade
+	npm update
 	npm prune
 	npm run ng build -- -prod
 
+.PHONY: pack
+pack: default
+	docker volume create packer
 	docker run \
+		--name packer \
 		--rm \
-		--volume $(CURDIR)/dist:/usr/local/src \
-		--volume packer:/usr/local/stash \
-		$(BUILD_SERVER) \
-			push vamp-lifter-ui $(VERSION)
+    		--volume $(CURDIR)/dist:/usr/local/src \
+    		--volume packer:/usr/local/stash \
+    		$(BUILD_SERVER) \
+      			push $(PROJECT) $(VERSION)
 
-pack-local:
-	ng build -prod
-
+.PHONY: pack-local
+pack-local: build
+	docker volume create packer
 	docker run \
+		--name packer \
 		--rm \
-		--volume $(CURDIR)/dist:/usr/local/src \
-		--volume packer:/usr/local/stash \
-		$(BUILD_SERVER) \
-			push vamp-lifter-ui $(VERSION)
+    		--volume $(CURDIR)/dist:/usr/local/src \
+    		--volume packer:/usr/local/stash \
+    		$(BUILD_SERVER) \
+      			push $(PROJECT) $(VERSION)
+
+.PHONY: clean
+clean:
+	rm -rf $(CURDIR)/dist
+
+
+.PHONY: clean-cache
+clean-cache:
+	rm -rf $(CURDIR)/node_modules
