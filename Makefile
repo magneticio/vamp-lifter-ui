@@ -27,7 +27,6 @@ all: default
 default:
 	docker pull $(BUILD_SERVER)
 	docker run \
-		--name buildui \
 		--rm \
 		--volume $(CURDIR):/srv/src \
 		--volume $(DIR_NPM):/home/vamp/.npm \
@@ -51,7 +50,6 @@ build:
 pack: default
 	docker volume create packer
 	docker run \
-		--name packer \
 		--rm \
     		--volume $(CURDIR)/dist:/usr/local/src \
     		--volume packer:/usr/local/stash \
@@ -62,7 +60,6 @@ pack: default
 pack-local: build
 	docker volume create packer
 	docker run \
-		--name packer \
 		--rm \
     		--volume $(CURDIR)/dist:/usr/local/src \
     		--volume packer:/usr/local/stash \
