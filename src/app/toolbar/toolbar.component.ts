@@ -21,7 +21,7 @@ export class ToolbarComponent implements OnInit {
   constructor(private router: Router, private toolbar: ToolbarService, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     iconRegistry
     .addSvgIcon('logo',
-    sanitizer.bypassSecurityTrustResourceUrl('/assets/icons/logo.svg'))
+    sanitizer.bypassSecurityTrustResourceUrl('assets/icons/logo.svg'))
   }
 
   ngOnInit() {
