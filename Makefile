@@ -8,8 +8,8 @@ SHELL             := bash
 # Constants, these can be overwritten in your Makefile.local
 PACKER       ?= packer
 BUILD_SERVER := magneticio/buildserver
-DIR_NPM	     := $(HOME)/.npm
-DIR_GYP	     := $(HOME)/.node-gyp
+DIR_NPM	     := "$(HOME)"/.npm
+DIR_GYP	     := "$(HOME)"/.node-gyp
 
 # if Makefile.local exists, include it.
 ifneq ("$(wildcard Makefile.local)", "")
@@ -29,7 +29,7 @@ default:
 	docker pull $(BUILD_SERVER)
 	docker run \
 		--rm \
-		--volume $(CURDIR):/srv/src \
+		--volume "$(CURDIR)":/srv/src \
 		--volume $(DIR_NPM):/home/vamp/.npm \
 		--volume $(DIR_GYP):/home/vamp/.node-gyp \
 		--workdir=/srv/src \
@@ -52,7 +52,7 @@ pack: default
 	docker volume create $(PACKER)
 	docker run \
 		--rm \
-    		--volume $(CURDIR)/dist:/usr/local/src \
+    		--volume "$(CURDIR)"/dist:/usr/local/src \
     		--volume $(PACKER):/usr/local/stash \
     		$(BUILD_SERVER) \
       			push $(PROJECT) $(VERSION)
@@ -62,16 +62,16 @@ pack-local: build
 	docker volume create $(PACKER)
 	docker run \
 		--rm \
-    		--volume $(CURDIR)/dist:/usr/local/src \
+    		--volume "$(CURDIR)"/dist:/usr/local/src \
     		--volume $(PACKER):/usr/local/stash \
     		$(BUILD_SERVER) \
       			push $(PROJECT) $(VERSION)
 
 .PHONY: clean
 clean:
-	rm -rf $(CURDIR)/dist
+	rm -rf "$(CURDIR)"/dist
 
 
 .PHONY: clean-cache
 clean-cache:
-	rm -rf $(CURDIR)/node_modules
+	rm -rf "$(CURDIR)"/node_modules
